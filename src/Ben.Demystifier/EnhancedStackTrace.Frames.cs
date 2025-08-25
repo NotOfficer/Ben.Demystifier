@@ -630,6 +630,7 @@ namespace System.Diagnostics
 
 #if NET6_0_OR_GREATER
         [RequiresUnreferencedCode(Constants.TrimWarning)]
+        [UnconditionalSuppressMessage("Trimming", "IL2045", Justification = Constants.AvoidAtRuntime)]
 #endif
         private static ResolvedParameter GetParameter(ParameterInfo parameter)
         {
