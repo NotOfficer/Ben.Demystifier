@@ -68,7 +68,7 @@ namespace System.Diagnostics
             if (ReturnParameter != null)
             {
                 ReturnParameter.Append(builder);
-                builder.Append(" ");
+                builder.Append(' ');
             }
 
             if (DeclaringType != null)
@@ -89,7 +89,7 @@ namespace System.Diagnostics
                 else
                 {
                     AppendDeclaringTypeName(builder, fullName)
-                        .Append(".")
+                        .Append('.')
                         .Append(Name);
                 }
             }
@@ -99,7 +99,7 @@ namespace System.Diagnostics
             }
             builder.Append(GenericArguments);
 
-            builder.Append("(");
+            builder.Append('(');
             if (MethodBase != null)
             {
                 var isFirst = true;
@@ -118,15 +118,15 @@ namespace System.Diagnostics
             }
             else
             {
-                builder.Append("?");
+                builder.Append('?');
             }
-            builder.Append(")");
+            builder.Append(')');
 
             if (!string.IsNullOrEmpty(SubMethod) || IsLambda)
             {
-                builder.Append("+");
+                builder.Append('+');
                 builder.Append(SubMethod);
-                builder.Append("(");
+                builder.Append('(');
                 if (SubMethodBase != null)
                 {
                     var isFirst = true;
@@ -145,9 +145,9 @@ namespace System.Diagnostics
                 }
                 else
                 {
-                    builder.Append("?");
+                    builder.Append('?');
                 }
-                builder.Append(")");
+                builder.Append(')');
                 if (IsLambda)
                 {
                     builder.Append(" => { }");
@@ -156,7 +156,7 @@ namespace System.Diagnostics
                     {
                         builder.Append(" [");
                         builder.Append(Ordinal);
-                        builder.Append("]");
+                        builder.Append(']');
                     }
                 }
             }

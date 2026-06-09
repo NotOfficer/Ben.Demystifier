@@ -17,14 +17,16 @@ namespace Ben.Demystifier.Test
 
             try
             {
-                var tasks = new List<Task>
-                {
-                    Task.Run(async () => await Throw1()),
-                    Task.Run(async () => await Throw2()),
-                    Task.Run(async () => await Throw3())
-                };
+                Task[] tasks =
+                [
+                    Task.Run(async () => await Throw1(), TestContext.Current.CancellationToken),
+                    Task.Run(async () => await Throw2(), TestContext.Current.CancellationToken),
+                    Task.Run(async () => await Throw3(), TestContext.Current.CancellationToken)
+                ];
 
-                Task.WaitAll(tasks.ToArray());
+#pragma warning disable xUnit1031 // Do not use blocking task operations in test method
+                Task.WaitAll(tasks, TestContext.Current.CancellationToken);
+#pragma warning restore xUnit1031 // Do not use blocking task operations in test method
             }
             catch (Exception ex)
             {

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Generic.Enumerable;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Ben.Demystifier;
 
@@ -15,10 +16,8 @@ namespace System.Diagnostics
     /// </summary>
     public static class ExceptionExtensions
     {
-        private static readonly FieldInfo? stackTraceString = typeof(Exception).GetField("_stackTraceString", BindingFlags.Instance | BindingFlags.NonPublic);
-
-        private static void SetStackTracesString(this Exception exception, string value)
-            => stackTraceString?.SetValue(exception, value);
+        [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "_stackTraceString")]
+        private static extern ref string? StackTraceString(Exception exception);
 
         /// <summary>
         /// Demystifies the given <paramref name="exception"/> and tracks the original stack traces for the whole exception tree.
@@ -34,7 +33,7 @@ namespace System.Diagnostics
 
                 if (stackTrace.FrameCount > 0)
                 {
-                    exception.SetStackTracesString(stackTrace.ToString());
+                    StackTraceString(exception) = stackTrace.ToString();
                 }
 
                 if (exception is AggregateException aggEx)

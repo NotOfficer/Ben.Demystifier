@@ -35,13 +35,12 @@ namespace System.Diagnostics
             try
             {
                 mba = Assembly.Load("Microsoft.Bcl.AsyncInterfaces");
+                AsyncIteratorStateMachineAttributeType = mba.GetType("System.Runtime.CompilerServices.AsyncIteratorStateMachineAttribute", false);
             }
             catch
             {
                 return;
             }
-
-            AsyncIteratorStateMachineAttributeType = mba.GetType("System.Runtime.CompilerServices.AsyncIteratorStateMachineAttribute", false);
         }
 
         private static List<EnhancedStackFrame> GetFrames(Exception exception)
@@ -164,7 +163,7 @@ namespace System.Diagnostics
             // Method name
             methodDisplayInfo.MethodBase = method;
             methodDisplayInfo.Name = methodName;
-            if (method.Name.IndexOf("<") >= 0)
+            if (method.Name.Contains('<'))
             {
                 if (TryResolveGeneratedName(ref method, out type, out methodName, out subMethodName, out var kind, out var ordinal))
                 {
@@ -274,7 +273,7 @@ namespace System.Diagnostics
                     foreach (var parameter in parameters)
                     {
                         var param = GetParameter(parameter);
-                        if (param.Name?.StartsWith("<") ?? true) continue;
+                        if (param.Name?.StartsWith('<') ?? true) continue;
 
                         parameterList.Add(param);
                     }
@@ -327,7 +326,7 @@ namespace System.Diagnostics
 
                         if (localNameStart < generatedName.Length)
                         {
-                            var localNameEnd = generatedName.IndexOf("|", localNameStart);
+                            var localNameEnd = generatedName.IndexOf('|', localNameStart);
                             if (localNameEnd > 0)
                             {
                                 subMethodName = generatedName.Substring(localNameStart, localNameEnd - localNameStart);
@@ -457,16 +456,16 @@ namespace System.Diagnostics
 
         private static void GetOrdinal(MethodBase method, ref int? ordinal)
         {
-            var lamdaStart = method.Name.IndexOf((char)GeneratedNameKind.LambdaMethod + "__") + 3;
+            var lamdaStart = method.Name.IndexOf((char)GeneratedNameKind.LambdaMethod + "__", StringComparison.Ordinal) + 3;
             if (lamdaStart > 3)
             {
-                var secondStart = method.Name.IndexOf("_", lamdaStart) + 1;
+                var secondStart = method.Name.IndexOf('_', lamdaStart) + 1;
                 if (secondStart > 0)
                 {
                     lamdaStart = secondStart;
                 }
 
-                if (!int.TryParse(method.Name.Substring(lamdaStart), out var foundOrdinal))
+                if (!int.TryParse(method.Name.AsSpan(lamdaStart), out var foundOrdinal))
                 {
                     ordinal = null;
                     return;
@@ -508,9 +507,9 @@ namespace System.Diagnostics
             switch (kind)
             {
                 case GeneratedNameKind.LocalFunction:
-                    var start = methodName.IndexOf("|");
+                    var start = methodName.IndexOf('|');
                     if (start < 1) return null;
-                    var end = methodName.IndexOf("_", start) + 1;
+                    var end = methodName.IndexOf('_', start) + 1;
                     if (end <= start) return null;
 
                     return methodName.Substring(start, end - start);
@@ -534,7 +533,7 @@ namespace System.Diagnostics
             {
                 openBracketOffset = 3;
             }
-            else if (name.StartsWith("<", StringComparison.Ordinal))
+            else if (name.StartsWith('<'))
             {
                 openBracketOffset = 0;
             }
@@ -660,7 +659,7 @@ namespace System.Diagnostics
         private static string GetValueTupleParameterName(IList<string> tupleNames, Type parameterType)
         {
             var sb = new StringBuilder();
-            sb.Append("(");
+            sb.Append('(');
             var args = parameterType.GetGenericArguments();
             for (var i = 0; i < args.Length; i++)
             {
@@ -682,11 +681,11 @@ namespace System.Diagnostics
                     continue;
                 }
 
-                sb.Append(" ");
+                sb.Append(' ');
                 sb.Append(argName);
             }
 
-            sb.Append(")");
+            sb.Append(')');
             return sb.ToString();
         }
 

@@ -16,7 +16,7 @@ namespace Ben.Demystifier.Test
             Exception innerException = null;
             try
             {
-                await Task.Run(() => throw new Exception()).ConfigureAwait(false);
+                await Task.Run(() => throw new Exception(), TestContext.Current.CancellationToken);
             }
             catch(Exception ex)
             {
@@ -96,7 +96,7 @@ namespace Ben.Demystifier.Test
             EnhancedStackTrace est = null;
 
             // Act
-            await Task.Run(() => est = EnhancedStackTrace.Current()).ConfigureAwait(false);
+            await Task.Run(() => est = EnhancedStackTrace.Current(), TestContext.Current.CancellationToken);
 
             // Assert
             var stackTrace = est.ToString();

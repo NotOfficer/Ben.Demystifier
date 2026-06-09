@@ -34,7 +34,7 @@ namespace Ben.Demystifier.Test
             }
             catch (Exception)
             {
-                Assert.True(false, "Must not throw an exception when diagnosing generic method display string.");
+                Assert.Fail("Must not throw an exception when diagnosing generic method display string.");
             }
 
         }

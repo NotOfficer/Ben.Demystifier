@@ -24,12 +24,14 @@ namespace System.Diagnostics
             { typeof(double), "double" },
             { typeof(float), "float" },
             { typeof(int), "int" },
+            { typeof(nint), "nint" },
             { typeof(long), "long" },
             { typeof(object), "object" },
             { typeof(sbyte), "sbyte" },
             { typeof(short), "short" },
             { typeof(string), "string" },
             { typeof(uint), "uint" },
+            { typeof(nuint), "nuint" },
             { typeof(ulong), "ulong" },
             { typeof(ushort), "ushort" }
         };

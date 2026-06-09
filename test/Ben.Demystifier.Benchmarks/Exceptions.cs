@@ -1,15 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
 
 namespace Ben.Demystifier.Benchmarks
 {
-    [SimpleJob(RuntimeMoniker.Net48)]
-    [SimpleJob(RuntimeMoniker.NetCoreApp21)]
-    [SimpleJob(RuntimeMoniker.NetCoreApp31)]
-    [SimpleJob(RuntimeMoniker.NetCoreApp50)]
+    [SimpleJob(RuntimeMoniker.HostProcess)]
     [Config(typeof(Config))]
     public class ExceptionTests
     {
@@ -30,7 +28,7 @@ namespace Ben.Demystifier.Benchmarks
             try
             {
                 action();
-                throw new InvalidOperationException("Should not be reachable.");
+                throw new UnreachableException();
             }
             catch (Exception e)
             {
@@ -38,6 +36,8 @@ namespace Ben.Demystifier.Benchmarks
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+        // ReSharper disable once UnusedMethodReturnValue.Local
         private static List<(int left, int right)> ReturnsTuple() => throw new Exception();
     }
 }

@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Ben.Demystifier.Test
 {
@@ -16,11 +15,11 @@ namespace Ben.Demystifier.Test
         }
 
         [Fact]
-        public void DemystifyShouldNotAffectTheOriginalStackTrace()
+        public async Task DemystifyShouldNotAffectTheOriginalStackTrace()
         {
             try
             {
-                SimpleMethodThatThrows(null).Wait();
+                await SimpleMethodThatThrows(null);
             }
             catch (Exception e)
             {

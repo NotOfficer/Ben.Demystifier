@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/sample/">
+    <Project Path="sample/StackTrace/StackTrace.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Ben.Demystifier/Ben.Demystifier.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/Ben.Demystifier.Benchmarks/Ben.Demystifier.Benchmarks.csproj">
+      <BuildType Project="Release" />
+    </Project>
+    <Project Path="test/Ben.Demystifier.Test/Ben.Demystifier.Test.csproj" />
+  </Folder>
+</Solution>

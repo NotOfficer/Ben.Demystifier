@@ -37,7 +37,7 @@ namespace System.Diagnostics
             if (!string.IsNullOrEmpty(Prefix))
             {
                 sb.Append(Prefix)
-                  .Append(" ");
+                  .Append(' ');
             }
 
             if (IsDynamicType)
@@ -50,12 +50,12 @@ namespace System.Diagnostics
             }
             else
             {
-                sb.Append("?");
+                sb.Append('?');
             }
 
             if (!string.IsNullOrEmpty(Name))
             {
-                sb.Append(" ")
+                sb.Append(' ')
                   .Append(Name);
             }
 

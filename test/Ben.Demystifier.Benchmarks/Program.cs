@@ -17,7 +17,7 @@ namespace Ben.Demystifier.Benchmarks
                 .DefinedTypes.Where(t => t.Name.EndsWith(BenchmarkSuffix))
                 .ToDictionary(t => t.Name.Substring(0, t.Name.Length - BenchmarkSuffix.Length), t => t, StringComparer.OrdinalIgnoreCase);
 
-            if (args.Length > 0 && args[0].Equals("all", StringComparison.OrdinalIgnoreCase))
+            if (benchmarks.Count == 1 || args.Length > 0 && args[0].Equals("all", StringComparison.OrdinalIgnoreCase))
             {
                 Console.WriteLine("Running full benchmarks suite");
                 benchmarks.Select(pair => pair.Value).ToList().ForEach(action => BenchmarkRunner.Run(action));

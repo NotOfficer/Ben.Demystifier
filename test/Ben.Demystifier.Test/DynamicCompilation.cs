@@ -28,7 +28,7 @@ namespace Ben.Demystifier.Test
             Exception demystifiedException = null;
             try
             {
-                await Task.Run(() => action()).ConfigureAwait(false);
+                await Task.Run(action, TestContext.Current.CancellationToken);
             }
             catch(Exception ex)
             {

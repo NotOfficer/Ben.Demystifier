@@ -32,16 +32,16 @@ namespace System.Diagnostics
                 {
                     // Need to unwrap the first generic argument first.
                     sb.Append(TypeNameHelper.GetTypeNameForGenericType(ResolvedType));
-                    sb.Append("<");
+                    sb.Append('<');
                     AppendValueTupleParameterName(sb, ResolvedType.GetGenericArguments()[0]);
-                    sb.Append(">");
+                    sb.Append('>');
                 }
             }
         }
 
         private void AppendValueTupleParameterName(StringBuilder sb, Type parameterType)
         {
-            sb.Append("(");
+            sb.Append('(');
             var args = parameterType.GetGenericArguments();
             for (var i = 0; i < args.Length; i++)
             {
@@ -63,11 +63,11 @@ namespace System.Diagnostics
                     continue;
                 }
 
-                sb.Append(" ");
+                sb.Append(' ');
                 sb.Append(argName);
             }
 
-            sb.Append(")");
+            sb.Append(')');
         }
     }
 }

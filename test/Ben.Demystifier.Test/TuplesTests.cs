@@ -9,13 +9,13 @@ namespace Ben.Demystifier.Test
     public class TuplesTests
     {
         [Fact]
-        public void DemistifiesAsyncMethodWithTuples()
+        public async Task DemistifiesAsyncMethodWithTuples()
         {
             Exception demystifiedException = null;
 
             try
             {
-                AsyncThatReturnsTuple().GetAwaiter().GetResult();
+                await AsyncThatReturnsTuple();
             }
             catch (Exception ex)
             {
@@ -30,7 +30,7 @@ namespace Ben.Demystifier.Test
             var expected = string.Join("", new[] {
                     "System.ArgumentException: Value does not fall within the expected range.",
                     "   at async Task<(int left, int right)> Ben.Demystifier.Test.TuplesTests.AsyncThatReturnsTuple()",
-                    "   at void Ben.Demystifier.Test.TuplesTests.DemistifiesAsyncMethodWithTuples()"});
+                    "   at async Task Ben.Demystifier.Test.TuplesTests.DemistifiesAsyncMethodWithTuples()"});
 
             Assert.Equal(expected, trace);
         }
